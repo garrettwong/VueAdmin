@@ -9,6 +9,16 @@
   "license": "MIT",
   "devDependencies": {
     "R2": "^1.4.3",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "concurrently": "^3.5.1",
+    "css-loader": "^0.28.11",
+    "file-loader": "^1.1.11",
     "grunt": "^0.4.5",
     "grunt-bootlint": "^0.9.1",
     "grunt-contrib-clean": "^0.6.0",
@@ -26,7 +36,11 @@
     "grunt-less": "^0.1.7",
     "grunt-notify": "^0.4.5",
     "grunt-text-replace": "^0.4.0",
-    "less": "^2.7.2"
+    "less": "^2.7.2",
+    "lite-server": "^2.3.0",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.10.2",
+    "webpack-cli": "^3.0.0"
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
@@ -56,6 +70,13 @@
     "pace": "0.0.4",
     "raphael": "^2.2.7",
     "select2": "^4.0.3",
-    "slimscroll": "^0.9.1"
+    "slimscroll": "^0.9.1",
+    "vue": "^2.5.16",
+    "vue-router": "^3.0.1"
+  },
+  "scripts": {
+    "start": "lite-server && npm run webpack",
+    "webpack": "webpack --watch --progress --colors",
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
