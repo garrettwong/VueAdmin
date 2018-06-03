@@ -1,54 +1,47 @@
-// on:hover
-var app2 = new Vue({
-  el: '#app-2',
-  data: {
-    message: 'You loaded this page on ' + new Date().toLocaleString()
-  }
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+
+import CardItem from './components/card-item.vue';
+import ChatBox from './components/chat-box.vue';
+import TodoList from './components/todo-list.vue';
+
+Vue.use(VueRouter);
+
+// These can be imported from other files
+const Foo = { template: '<div>foo</div>' }
+const Bar = { template: '<div>bar</div>' }
+
+// 2. Define some routes
+// Each route should map to a component. The "component" can
+// either be an actual component constructor created via
+// `Vue.extend()`, or just a component options object.
+// We'll talk about nested routes later.
+const routes = [
+  { path: '/foo', component: Foo },
+  { path: '/bar', component: Bar }
+]
+
+// 3. Create the router instance and pass the `routes` option
+// You can pass in additional options here, but let's
+// keep it simple for now.
+const router = new VueRouter({
+  routes // short for `routes: routes`
 })
 
-// conditions and loops
-var app3 = new Vue({
-  el: '#app-3',
-  data: {
-    seen: true
-  }
-})
-
-var app4 = new Vue({
-  el: '#app-4',
-  data: {
-    todos: [
-      { text: 'Learn JavaScript' },
-      { text: 'Learn Vue' },
-      { text: 'Build something awesome' }
-    ]
-  }
-})
-
-var app5 = new Vue({
-  el: '#app-5',
-  data: {
-    message: 'Hello Vue.js!'
-  },
-  methods: {
-    reverseMessage: function () {
-      this.message = this.message.split('').reverse().join('')
-    }
-  }
-})
-
-var app6 = new Vue({
-  el: '#app-6',
-  data: {
-    message: 'Hello Vue!'
-  }
-})
+// 4. Create and mount the root instance.
+// Make sure to inject the router with the router option to make the
+// whole app router-aware.
+const app = new Vue({
+  router
+}).$mount('#router-app');
 
 
 
-
-var vueCards = new Vue({
+let vueCards = new Vue({
   el: '#vue-cards',
+  components: { 
+    CardItem
+  },
   data: {
     cards: [
       { 
@@ -94,6 +87,9 @@ var vueCards = new Vue({
 
 let chatBox = new Vue({
   el: '#chat-box',
+  components: { 
+    ChatBox
+  },
   data: {
     chats: [
       {
@@ -128,6 +124,36 @@ let chatBox = new Vue({
           url: '#/Download.jpg'
         }
       },
+
+    ]
+  }
+})
+
+let todoList = new Vue({
+  el: '#todo-list',
+  components: { 
+    TodoList
+  },
+  data: {
+    todos: [
+      {
+        id: 1,
+        labelClass: 'label-danger',
+        message: 'Hi Vicky',
+        created: '2:15AM'
+      },
+      {
+        id: 2,
+        labelClass: 'label-info',
+        message: 'Hello there',
+        created: '2:25AM'
+      },
+      {
+        id: 3,
+        labelClass: 'label-default',
+        message: 'Do homework',
+        created: '3:19PM'
+      }
 
     ]
   }

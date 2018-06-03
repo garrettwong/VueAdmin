@@ -39,6 +39,8 @@
     "less": "^2.7.2",
     "lite-server": "^2.3.0",
     "style-loader": "^0.21.0",
+    "vue-loader": "^15.2.4",
+    "vue-template-compiler": "^2.5.16",
     "webpack": "^4.10.2",
     "webpack-cli": "^3.0.0"
   },

@@ -1,9 +1,11 @@
 ﻿var path = require('path');
 var webpack = require('webpack');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
 
 module.exports = {
     entry: {
-        AppMain: './dist/js/app2.js'
+        AppMain: './dist/js/app.js'
     },
     output: {
         path: path.resolve(__dirname, './dist'),
@@ -49,13 +51,17 @@ module.exports = {
         jQuery: 'jQuery',
         $: 'jQuery'
     },
-    plugins: [    // for third party libraries that require jquery
-    new webpack.ProvidePlugin({
-        $: 'jquery',
-        jQuery: 'jquery',
-        jquery: 'jquery',
-        'window.jQuery': 'jquery',
-    })],
+    plugins: [    
+        // for third party libraries that require jquery
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery',
+            jquery: 'jquery',
+            'window.jQuery': 'jquery',
+        }), 
+        
+        new VueLoaderPlugin()
+    ],
     devServer: {
         historyApiFallback: true,
         noInfo: true
