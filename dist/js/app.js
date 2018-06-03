@@ -115,7 +115,7 @@ let chatBox = new Vue({
       },
       {
         id: 4,
-        from: 'Bryan',
+        from: 'Timothy',
         userIconUrl: 'dist/img/user2-160x160.jpg',
         message: 'Yes I do.  I have setup a meeting at 2pm today to discuss.  Material is attached.',
         time: '2:15AM',
