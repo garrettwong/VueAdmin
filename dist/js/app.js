@@ -8,8 +8,14 @@ import TodoList from './components/todo-list.vue';
 Vue.use(VueRouter);
 
 // These can be imported from other files
-const Foo = { template: '<div>foo</div>' }
-const Bar = { template: '<div>bar</div>' }
+const Foo = { 
+  template: '<div>foo</div>' 
+}
+const Bar = {
+  components: {'todo-list': TodoList},
+  props: ['todos'],
+  template: '<div><todo-list v-bind:todos="todos"></todo-list></div>' 
+}
 
 // 2. Define some routes
 // Each route should map to a component. The "component" can
@@ -17,8 +23,29 @@ const Bar = { template: '<div>bar</div>' }
 // `Vue.extend()`, or just a component options object.
 // We'll talk about nested routes later.
 const routes = [
-  { path: '/foo', component: Foo },
-  { path: '/bar', component: Bar }
+  {
+    path: '*',
+    component: Foo
+  },
+  { 
+    path: '/foo', 
+    component: Foo 
+  },
+  { 
+    path: '/bar', 
+    component: Bar, 
+    props: {todos: [{
+      id: 1,
+      labelClass: 'label-danger',
+      message: 'Trusted Wilson',
+      created: '2:05AM'
+    },{
+      id: 2,
+      labelClass: 'label-danger',
+      message: 'Min Wilson',
+      created: '2:05AM'
+    }]}
+  }
 ]
 
 // 3. Create the router instance and pass the `routes` option
@@ -32,7 +59,8 @@ const router = new VueRouter({
 // Make sure to inject the router with the router option to make the
 // whole app router-aware.
 const app = new Vue({
-  router
+  router,
+  
 }).$mount('#router-app');
 
 
