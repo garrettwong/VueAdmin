@@ -49,7 +49,9 @@ module.exports = {
     },
     externals: {
         jQuery: 'jQuery',
-        $: 'jQuery'
+        $: 'jQuery',
+        vue: 'Vue',
+        "vue-router": 'Vue-Router'
     },
     plugins: [    
         // for third party libraries that require jquery
