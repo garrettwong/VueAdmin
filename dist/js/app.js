@@ -27,7 +27,7 @@ const Parent = {
     <div class="parent">
       <h2>Parent</h2>
 
-      <transition :name="transitionName">
+      <transition :name="transiti=onName">
         <router-view class="child-view"></router-view>
       </transition>
     </div>
@@ -212,10 +212,63 @@ const app = new Vue({
     title: 'GVue',
 
     user: {
+      id: 1,
       fullName: 'Garrett Wong',
       profession: 'Consultant',
       signupDate: 'June 10',
-      imageUrl: 'dist/img/g.jpg'
+      imageUrl: 'dist/img/g.jpg',
+
+      // <new-messages /> component: (refactor to VueX)
+      messages: [{
+        imageUrl: 'dist/img/g.jpg',
+        from: 'Garrett Wong',
+        received: '4 days ago',
+        text: 'hi'
+      },
+      {
+        imageUrl: 'dist/img/user3-128x128.jpg',
+        from: 'Jared Wong',
+        received: '2 days ago',
+        text: 'hello'
+      }],
+
+
+      // <notifications /> component: (refactor to VueX)
+      notifications: [{
+        received: '4 days ago',
+        text: 'Test',
+        faIcon: 'fa-users',
+        color: 'text-info'
+      },
+      {
+        received: '2 days ago',
+        text: 'Added as a friend',
+        faIcon: 'fa-rocket',
+        color: 'text-purple'
+      }],
+
+      // <tasks /> component: (refactor to VueX)
+      tasks: [{
+        text: 'Take out the trash',
+        completionPercentage: '50%',
+        progressBarColor: 'progress-bar-aqua',
+      },
+      {
+        text: 'Laundry',
+        completionPercentage: '80%',
+        progressBarColor: 'progress-bar-success',
+      },
+      {
+        text: 'Garden',
+        completionPercentage: '10%',
+        progressBarColor: 'progress-bar-danger',
+      },
+      {
+        text: 'Water Heater, Shower Head',
+        completionPercentage: '10%',
+        progressBarColor: 'progress-bar-warning',
+      },
+      ]
     },
   }
 }).$mount('#router-app');
