@@ -35,14 +35,31 @@ const Parent = {
 }
 
 const Dashboard1 = {
-  components: { 
+  components: {
     'chat-box': ChatBox,
     'card-item': CardItem
   },
   props: [
-    'chats', 
     'cards'
   ],
+  data() {
+    return {
+      chats: [{
+        id: 1,
+        from: 'John',
+        userIconUrl: 'dist/img/user2-160x160.jpg',
+        message: 'Hi Rich',
+        time: '2:15AM'
+      },
+      {
+        id: 2,
+        from: 'Rich',
+        userIconUrl: 'dist/img/user3-128x128.jpg',
+        message: 'Hello there',
+        time: '2:17AM'
+      }]
+    }
+  },
   template: `
   <div>
     <router-link to="/dashboarda" active-class="text-danger">Go to Foo</router-link>
@@ -54,9 +71,28 @@ const Dashboard1 = {
     </div>
 
     <div>
-      <chat-box v-bind:chats="chats"></chat-box>
+      <chat-box v-bind:chats="chats" v-on:chat-added="onChatAdded"></chat-box>
     </div>
   </div>`,
+
+  methods: {
+    onChatAdded: function (newChat) {
+      // use vuex
+      console.log('new chat', newChat);
+      console.log('this', this);
+      console.log('this chats', this.chats);
+
+      this.chats.push(newChat);
+      console.log(this.chats);
+    }
+  },
+  mounted: function(){
+    console.log('mnt', this)
+
+
+    console.log(this.$route);
+    
+  }
 }
 
 const Dashboard2 = {
@@ -82,62 +118,46 @@ const routes = [
     path: '/dashboarda',
     component: Dashboard1,
     props: {
-      chats: [
+      cards: [
+        {
+          id: 0,
+          type: 'count',
+          value: 150,
+          title: 'New Orders',
+          backgroundCss: 'bg-aqua',
+          ionIcon: 'ion-bag',
+          moreInfoUrl: '#/NewOrders'
+        },
         {
           id: 1,
-          from: 'Bryan',
-          userIconUrl: 'dist/img/user2-160x160.jpg',
-          message: 'Hi Vicky',
-          time: '2:15AM'
+          type: 'percent',
+          value: 53,
+          title: 'Bounce Rate',
+          backgroundCss: 'bg-green',
+          ionIcon: 'ion-stats-bars',
+          moreInfoUrl: '#/BounceRate'
         },
         {
           id: 2,
-          from: 'Victoria',
-          userIconUrl: 'dist/img/user3-128x128.jpg',
-          message: 'Hello there',
-          time: '2:25AM'
-        }
-      ],
-      cards: [
-        { 
-          id: 0, 
-          type: 'count', 
-          value: 150, 
-          title: 'New Orders', 
-          backgroundCss: 'bg-aqua', 
-          ionIcon: 'ion-bag', 
-          moreInfoUrl: '#/NewOrders' 
+          type: 'count',
+          value: 44,
+          title: 'User Registrations',
+          backgroundCss: 'bg-yellow',
+          ionIcon: 'ion-person-add',
+          moreInfoUrl: '#/UserRegistrations'
         },
-        { 
-          id: 1, 
-          type: 'percent', 
-          value: 53, 
-          title: 'Bounce Rate', 
-          backgroundCss: 'bg-green', 
-          ionIcon: 'ion-stats-bars', 
-          moreInfoUrl: '#/BounceRate' 
-        },
-        { 
-          id: 2, 
-          type: 'count', 
-          value: 44, 
-          title: 'User Registrations', 
-          backgroundCss: 'bg-yellow', 
-          ionIcon: 'ion-person-add', 
-          moreInfoUrl: '#/UserRegistrations' 
-        },
-        { 
-          id: 3, 
-          type: 'count', 
-          value: 66, 
-          title: 'Unique Visitors', 
-          backgroundCss: 'bg-red', 
-          ionIcon: 'ion-pie-graph', 
-          moreInfoUrl: '#/UniqueVisitors' 
+        {
+          id: 3,
+          type: 'count',
+          value: 66,
+          title: 'Unique Visitors',
+          backgroundCss: 'bg-red',
+          ionIcon: 'ion-pie-graph',
+          moreInfoUrl: '#/UniqueVisitors'
         }
       ]
     }
-  },{
+  }, {
     path: '/dashboardb',
     component: Dashboard2,
     props: {
@@ -160,13 +180,13 @@ const routes = [
     path: '/parent',
     component: Parent,
     children: [
-      { 
-        path: '', 
-        component: Dashboard1 
+      {
+        path: '',
+        component: Dashboard1
       },
-      { 
-        path: '/Dashboard1', 
-        component: Dashboard1 
+      {
+        path: '/Dashboard1',
+        component: Dashboard1
       },
       {
         path: '/Dashboard2',

@@ -18,6 +18,7 @@
         </div>
 
         <div class="box-body chat">
+            {{this.chats}}
 
             <div class="item" v-for="chat in chats" v-bind:chat="chat" v-bind:key="chat.id">
                 <img :src="chat.userIconUrl" alt="user image" class="online">
@@ -40,8 +41,7 @@
                     </p>
 
                     <div class="pull-right">
-                    <a :href="chat.attachment.url" target="_blank" 
-                        class="btn btn-primary btn-sm btn-flat">Open</a>
+                        <a :href="chat.attachment.url" target="_blank" class="btn btn-primary btn-sm btn-flat">Open</a>
                     </div>
                 </div>
             </div>
@@ -49,10 +49,10 @@
 
         <div class="box-footer">
             <div class="input-group">
-            <input class="form-control" placeholder="Type message...">
+            <input class="form-control" placeholder="Type message..." v-model="chatMessage">
 
             <div class="input-group-btn">
-                <button type="button" class="btn btn-success">
+                <button type="button" class="btn btn-success" v-on:click="addChat">
                 <i class="fa fa-plus"></i>
                 </button>
             </div>
@@ -60,8 +60,25 @@
         </div>
     </div>
 </template>
+
 <script>
 export default {
-  props: ["chats"]
+  props: ["chats"],
+
+  methods: {
+    addChat: function() {
+      let newChat = {
+        id: 3,
+        from: "John",
+        userIconUrl: "dist/img/user2-160x160.jpg",
+        message: this.chatMessage,
+        time: "2:15AM"
+      };
+
+        console.log('addChat');
+
+      this.$emit("chat-added", newChat);
+    }
+  }
 };
 </script>
