@@ -97,11 +97,53 @@ const Dashboard1 = {
 
 const Dashboard2 = {
   components: { 'todo-list': TodoList },
-  props: ['todos'],
+  props: [],
+  data() {
+    return {
+      todos: [{
+        id: 1,
+        from: 'John',
+        userIconUrl: 'dist/img/user2-160x160.jpg',
+        message: 'Hi Rich',
+        time: '2:15AM'
+      },
+      {
+        id: 2,
+        from: 'Rich',
+        userIconUrl: 'dist/img/user3-128x128.jpg',
+        message: 'Hello there',
+        time: '2:17AM'
+      }]
+    }
+  },
   template: `
     <div>
-      <todo-list v-bind:todos="todos"></todo-list>
+    GG
+      <todo-list v-bind:todos="todos" 
+        v-on:addTodo="on_addTodo"
+        v-on:editTodo="on_editTodo"></todo-list>
     </div>`,
+  methods: {
+    on_addTodo: function(todoText) {
+      let newTodo = {
+        id: 3,
+        from: 'Jeremy',
+        userIconUrl: 'dist/img/user2-160x160.jpg',
+        message: todoText,
+        time: '3:22PM'
+      };
+
+      this.todos.push(newTodo);
+    },
+
+    on_editTodo: function(todo) {
+      this.todos.forEach(function(curTodo) {
+        if (curTodo.id === todo.id) {
+          curTodo = Object.assign(curTodo, todo);
+        }
+      });
+    }
+  }
 }
 
 // 2. Define some routes
@@ -161,19 +203,19 @@ const routes = [
     path: '/dashboardb',
     component: Dashboard2,
     props: {
-      todos: [
-        {
-          id: 1,
-          labelClass: 'label-danger',
-          message: 'Trusted Wilson',
-          created: '2:05AM'
-        }, {
-          id: 2,
-          labelClass: 'label-danger',
-          message: 'Min Wilson',
-          created: '2:05AM'
-        }
-      ]
+      // todos: [
+      //   {
+      //     id: 1,
+      //     labelClass: 'label-danger',
+      //     message: 'Trusted Wilson',
+      //     created: '2:05AM'
+      //   }, {
+      //     id: 2,
+      //     labelClass: 'label-danger',
+      //     message: 'Min Wilson',
+      //     created: '2:05AM'
+      //   }
+      // ]
     }
   },
   {

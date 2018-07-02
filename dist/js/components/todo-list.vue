@@ -44,7 +44,7 @@
                 </small>
                 
                 <div class="tools">
-                    <i class="fa fa-edit"></i>
+                    <i class="fa fa-edit" v-on:click="openModal_editTodo(todo)"></i>
                     <i class="fa fa-trash-o"></i>
                 </div>
             </li>
@@ -63,77 +63,94 @@
     <!-- modal: add -->
     <div class="modal fade" id="modal-add-todo">
         <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Default Modal</h4>
-            </div>
-            <div class="modal-body">
-                <input type="text" v-model="todo">
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" v-on:click="addTodo">Save changes</button>
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Add todo</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <input type="text" v-model="todo" class="form-control" placeholder="Todo...">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" v-on:click="addTodo">Add Todo</button>
+                </div>
             </div>
         </div>
-        <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal -->
+    <!-- /.modal: add -->
+
+    <!-- modal: edit -->
+    <div class="modal fade" id="modal-edit-todo">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Edit todo: {{originalSelectedTodoText}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <input type="text" v-model="selectedTodo.message" class="form-control" placeholder="Todo...">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" v-on:click="editTodo">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.modal: edit -->
 </div>
 </template>
 
 <script>
-
 require("jquery-ui");
 require("jquery-ui/ui/widgets/sortable");
 require("jquery-ui/ui/disable-selection");
-import 'bootstrap';
+import "bootstrap";
 
 // add modal
 
 export default {
   props: ["todos"],
-
+    data() {
+        return {
+            selectedTodo: {}
+        }
+    },
   methods: {
     openModal_addTodo: function() {
-        console.log("modal", this);
-
-        $("#modal-add-todo").modal();
+      $('#modal-add-todo').modal();
     },
     addTodo: function() {
-        console.log('addTodo', this.todo);
-
-        this.$emit('addTodo', this.todo);
+      this.$emit('addTodo', this.todo);
     },
 
-    
-    openModal_editTodo: function() {
-        console.log("modal", this);
+    openModal_editTodo: function(selectedTodo) {
+      this.selectedTodo = Object.assign({}, selectedTodo);
+      this.originalSelectedTodoText = this.selectedTodo.message;
 
-        $(".modal").modal();
+      $('#modal-edit-todo').modal();
     },
     editTodo: function() {
-        console.log('addTodo', this.todo);
+      this.$emit("editTodo", this.selectedTodo);
 
-        this.$emit('addTodo', this.todo);
+      $('#modal-edit-todo').modal('toggle');
     },
 
-    
     openModal_deleteTodo: function() {
-        console.log("modal", this);
-
-        $(".modal").modal();
+      $(".modal").modal();
     },
     deleteTodo: function() {
-        console.log('addTodo', this.todo);
-
-        this.$emit('addTodo', this.todo);
-    },
-
-    
+      this.$emit("deleteTodo", this.todo);
+    }
   },
 
   mounted() {
@@ -147,10 +164,11 @@ export default {
       zIndex: 999999
     });
 
-    $(document).keyup(function(e) { 
-        if (e.keyCode == 27) { // esc
-            $(".modal").modal('toggle');
-        } 
+    $(document).keyup(function(e) {
+      if (e.keyCode == 27) {
+        // esc
+        $(".modal").modal("toggle");
+      }
     });
   }
 };
