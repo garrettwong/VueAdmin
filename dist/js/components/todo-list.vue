@@ -114,7 +114,7 @@
 require("jquery-ui");
 require("jquery-ui/ui/widgets/sortable");
 require("jquery-ui/ui/disable-selection");
-import "bootstrap";
+import "bootstrap/js/modal";
 
 // add modal
 

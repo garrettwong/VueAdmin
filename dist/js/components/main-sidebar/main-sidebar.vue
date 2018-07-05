@@ -53,13 +53,6 @@
           </li>
         </ul>
       </li>
-
-      <li>
-        <a href="/index2.html">
-          <i class="fa fa-circle-o text-aqua"></i>
-          <span>Dashboard - Other</span>
-        </a>
-      </li>
     </ul>
   </section>
   <!-- /.sidebar -->

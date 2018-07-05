@@ -62,9 +62,6 @@ const Dashboard1 = {
   },
   template: `
   <div>
-    <router-link to="/dashboarda" active-class="text-danger">Go to Foo</router-link>
-    <router-link to="/dashboardb" active-class="text-danger">Go to Bar</router-link>
-
     <div class="row">
       <card-item v-for="card in cards" v-bind:card="card" v-bind:key="card.id">
       </card-item>
@@ -118,7 +115,6 @@ const Dashboard2 = {
   },
   template: `
     <div>
-    GG
       <todo-list v-bind:todos="todos" 
         v-on:addTodo="on_addTodo"
         v-on:editTodo="on_editTodo"></todo-list>
