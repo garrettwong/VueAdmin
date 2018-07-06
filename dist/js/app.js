@@ -6,6 +6,7 @@ import MainSidebar from './components/main-sidebar/main-sidebar.vue';
 
 import CardItem from './components/card-item.vue';
 import ChatBox from './components/chat-box.vue';
+import CryptoPie from './components/crypto-pie.vue';
 import TodoList from './components/todo-list.vue';
 
 Vue.use(VueRouter);
@@ -37,7 +38,8 @@ const Parent = {
 const Dashboard1 = {
   components: {
     'chat-box': ChatBox,
-    'card-item': CardItem
+    'card-item': CardItem,
+    'crypto-pie': CryptoPie
   },
   props: [
     'cards'
@@ -63,12 +65,19 @@ const Dashboard1 = {
   template: `
   <div>
     <div class="row">
-      <card-item v-for="card in cards" v-bind:card="card" v-bind:key="card.id">
-      </card-item>
+      <card-item v-for="card in cards" v-bind:card="card" v-bind:key="card.id"></card-item>
     </div>
 
     <div>
       <chat-box v-bind:chats="chats" v-on:chat-added="onChatAdded"></chat-box>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">
+        <crypto-pie></crypto-pie>
+      
+      </div>
+
     </div>
   </div>`,
 
@@ -83,12 +92,12 @@ const Dashboard1 = {
       console.log(this.chats);
     }
   },
-  mounted: function(){
+  mounted: function () {
     console.log('mnt', this)
 
 
     console.log(this.$route);
-    
+
   }
 }
 
@@ -120,7 +129,7 @@ const Dashboard2 = {
         v-on:editTodo="on_editTodo"></todo-list>
     </div>`,
   methods: {
-    on_addTodo: function(todoText) {
+    on_addTodo: function (todoText) {
       let newTodo = {
         id: 3,
         from: 'Jeremy',
@@ -132,8 +141,8 @@ const Dashboard2 = {
       this.todos.push(newTodo);
     },
 
-    on_editTodo: function(todo) {
-      this.todos.forEach(function(curTodo) {
+    on_editTodo: function (todo) {
+      this.todos.forEach(function (curTodo) {
         if (curTodo.id === todo.id) {
           curTodo = Object.assign(curTodo, todo);
         }
