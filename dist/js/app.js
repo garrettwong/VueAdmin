@@ -8,6 +8,7 @@ import CardItem from './components/card-item.vue';
 import ChatBox from './components/chat-box.vue';
 import CryptoPie from './components/crypto-pie.vue';
 import TodoList from './components/todo-list.vue';
+import TableEditor from './components/table-editor.vue';
 
 Vue.use(VueRouter);
 
@@ -47,19 +48,20 @@ const Dashboard1 = {
   data() {
     return {
       chats: [{
-        id: 1,
-        from: 'John',
-        userIconUrl: 'dist/img/user2-160x160.jpg',
-        message: 'Hi Rich',
-        time: '2:15AM'
-      },
-      {
-        id: 2,
-        from: 'Rich',
-        userIconUrl: 'dist/img/user3-128x128.jpg',
-        message: 'Hello there',
-        time: '2:17AM'
-      }]
+          id: 1,
+          from: 'John',
+          userIconUrl: 'dist/img/user2-160x160.jpg',
+          message: 'Hi Rich',
+          time: '2:15AM'
+        },
+        {
+          id: 2,
+          from: 'Rich',
+          userIconUrl: 'dist/img/user3-128x128.jpg',
+          message: 'Hello there',
+          time: '2:17AM'
+        }
+      ]
     }
   },
   template: `
@@ -102,31 +104,42 @@ const Dashboard1 = {
 }
 
 const Dashboard2 = {
-  components: { 'todo-list': TodoList },
+  components: {
+    'todo-list': TodoList,
+    'table-editor': TableEditor
+  },
   props: [],
   data() {
     return {
       todos: [{
-        id: 1,
-        from: 'John',
-        userIconUrl: 'dist/img/user2-160x160.jpg',
-        message: 'Hi Rich',
-        time: '2:15AM'
-      },
-      {
-        id: 2,
-        from: 'Rich',
-        userIconUrl: 'dist/img/user3-128x128.jpg',
-        message: 'Hello there',
-        time: '2:17AM'
-      }]
+          id: 1,
+          from: 'John',
+          userIconUrl: 'dist/img/user2-160x160.jpg',
+          message: 'Hi Rich',
+          time: '2:15AM'
+        },
+        {
+          id: 2,
+          from: 'Rich',
+          userIconUrl: 'dist/img/user3-128x128.jpg',
+          message: 'Hello there',
+          time: '2:17AM'
+        }
+      ]
     }
   },
   template: `
-    <div>
-      <todo-list v-bind:todos="todos" 
-        v-on:addTodo="on_addTodo"
-        v-on:editTodo="on_editTodo"></todo-list>
+    <div class="row">
+      <div class="col-sm-6">
+        <todo-list v-bind:todos="todos" 
+          v-on:addTodo="on_addTodo"
+          v-on:editTodo="on_editTodo"
+          v-on:deleteTodo="on_deleteTodo"></todo-list>
+      </div>
+
+      <div class="col-sm-6">
+        <table-editor></table-editor>
+      </div>
     </div>`,
   methods: {
     on_addTodo: function (todoText) {
@@ -147,6 +160,17 @@ const Dashboard2 = {
           curTodo = Object.assign(curTodo, todo);
         }
       });
+    },
+
+    on_deleteTodo: function (todo) {
+      for (let i = 0; i < this.todos.length; i++) {
+        let curTodo = this.todos[i];
+
+        if (curTodo.id === todo.id) {
+          this.todos.splice(i, 1);
+          break;
+        }
+      }
     }
   }
 }
@@ -156,8 +180,7 @@ const Dashboard2 = {
 // either be an actual component constructor created via
 // `Vue.extend()`, or just a component options object.
 // We'll talk about nested routes later.
-const routes = [
-  {
+const routes = [{
     path: '*',
     component: Dashboard1
   },
@@ -165,8 +188,7 @@ const routes = [
     path: '/dashboarda',
     component: Dashboard1,
     props: {
-      cards: [
-        {
+      cards: [{
           id: 0,
           type: 'count',
           value: 150,
@@ -226,8 +248,7 @@ const routes = [
   {
     path: '/parent',
     component: Parent,
-    children: [
-      {
+    children: [{
         path: '',
         component: Dashboard1
       },
@@ -239,19 +260,17 @@ const routes = [
         path: '/Dashboard2',
         component: Dashboard2,
         props: {
-          todos: [
-            {
-              id: 1,
-              labelClass: 'label-danger',
-              message: 'Trusted Wilson',
-              created: '2:05AM'
-            }, {
-              id: 2,
-              labelClass: 'label-danger',
-              message: 'Min Wilson',
-              created: '2:05AM'
-            }
-          ]
+          todos: [{
+            id: 1,
+            labelClass: 'label-danger',
+            message: 'Trusted Wilson',
+            created: '2:05AM'
+          }, {
+            id: 2,
+            labelClass: 'label-danger',
+            message: 'Min Wilson',
+            created: '2:05AM'
+          }]
         }
       },
     ]
@@ -287,54 +306,56 @@ const app = new Vue({
 
       // <new-messages /> component: (refactor to VueX)
       messages: [{
-        imageUrl: 'dist/img/g.jpg',
-        from: 'Garrett Wong',
-        received: '4 days ago',
-        text: 'hi'
-      },
-      {
-        imageUrl: 'dist/img/user3-128x128.jpg',
-        from: 'Jared Wong',
-        received: '2 days ago',
-        text: 'hello'
-      }],
+          imageUrl: 'dist/img/g.jpg',
+          from: 'Garrett Wong',
+          received: '4 days ago',
+          text: 'hi'
+        },
+        {
+          imageUrl: 'dist/img/user3-128x128.jpg',
+          from: 'Jared Wong',
+          received: '2 days ago',
+          text: 'hello'
+        }
+      ],
 
 
       // <notifications /> component: (refactor to VueX)
       notifications: [{
-        received: '4 days ago',
-        text: 'Test',
-        faIcon: 'fa-users',
-        color: 'text-info'
-      },
-      {
-        received: '2 days ago',
-        text: 'Added as a friend',
-        faIcon: 'fa-rocket',
-        color: 'text-purple'
-      }],
+          received: '4 days ago',
+          text: 'Test',
+          faIcon: 'fa-users',
+          color: 'text-info'
+        },
+        {
+          received: '2 days ago',
+          text: 'Added as a friend',
+          faIcon: 'fa-rocket',
+          color: 'text-purple'
+        }
+      ],
 
       // <tasks /> component: (refactor to VueX)
       tasks: [{
-        text: 'Take out the trash',
-        completionPercentage: '50%',
-        progressBarColor: 'progress-bar-aqua',
-      },
-      {
-        text: 'Laundry',
-        completionPercentage: '80%',
-        progressBarColor: 'progress-bar-success',
-      },
-      {
-        text: 'Garden',
-        completionPercentage: '10%',
-        progressBarColor: 'progress-bar-danger',
-      },
-      {
-        text: 'Water Heater, Shower Head',
-        completionPercentage: '10%',
-        progressBarColor: 'progress-bar-warning',
-      },
+          text: 'Take out the trash',
+          completionPercentage: '50%',
+          progressBarColor: 'progress-bar-aqua',
+        },
+        {
+          text: 'Laundry',
+          completionPercentage: '80%',
+          progressBarColor: 'progress-bar-success',
+        },
+        {
+          text: 'Garden',
+          completionPercentage: '10%',
+          progressBarColor: 'progress-bar-danger',
+        },
+        {
+          text: 'Water Heater, Shower Head',
+          completionPercentage: '10%',
+          progressBarColor: 'progress-bar-warning',
+        },
       ]
     },
   }
@@ -366,8 +387,7 @@ let vueCards = new Vue({
     CardItem
   },
   data: {
-    cards: [
-      {
+    cards: [{
         id: 0,
         type: 'count',
         value: 150,

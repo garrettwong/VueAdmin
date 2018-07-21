@@ -45,7 +45,7 @@
                 
                 <div class="tools">
                     <i class="fa fa-edit" v-on:click="openModal_editTodo(todo)"></i>
-                    <i class="fa fa-trash-o"></i>
+                    <i class="fa fa-trash-o" v-on:click="deleteTodo(todo)"></i>
                 </div>
             </li>
 
@@ -71,7 +71,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="input-group">
-                        <input type="text" v-model="todo" class="form-control" placeholder="Todo...">
+                        <input type="text" ref="addTodoInput" v-model="todo" class="form-control" placeholder="Todo...">
                     </div>
                 </div>
 
@@ -120,36 +120,44 @@ import "bootstrap/js/modal";
 
 export default {
   props: ["todos"],
-    data() {
-        return {
-            selectedTodo: {}
-        }
-    },
+  data() {
+    return {
+      selectedTodo: {}
+    };
+  },
   methods: {
     openModal_addTodo: function() {
-      $('#modal-add-todo').modal();
+      $("#modal-add-todo").modal();
+
+      // TODO: focus on the input box on modal load -- how do you do this in vue. v-model is selectedTodo.message
+      this.$nextTick(() => {
+        this.$refs.addTodoInput.focus();
+      });
     },
     addTodo: function() {
-      this.$emit('addTodo', this.todo);
+      // TODO: we should add this to the database first
+
+      this.$emit("addTodo", this.todo);
     },
 
     openModal_editTodo: function(selectedTodo) {
       this.selectedTodo = Object.assign({}, selectedTodo);
       this.originalSelectedTodoText = this.selectedTodo.message;
 
-      $('#modal-edit-todo').modal();
+      $("#modal-edit-todo").modal();
     },
     editTodo: function() {
+      // TODO: we should edit this in the database first
+
       this.$emit("editTodo", this.selectedTodo);
 
-      $('#modal-edit-todo').modal('toggle');
+      $("#modal-edit-todo").modal("toggle");
     },
 
-    openModal_deleteTodo: function() {
-      $(".modal").modal();
-    },
-    deleteTodo: function() {
-      this.$emit("deleteTodo", this.todo);
+    deleteTodo: function(todo) {
+      // TODO: we should delete this in the database first
+
+      this.$emit("deleteTodo", todo);
     }
   },
 
@@ -166,8 +174,8 @@ export default {
 
     $(document).keyup(function(e) {
       if (e.keyCode == 27) {
-        // esc
-        $(".modal").modal("toggle");
+        // esc - only apply to modal's that are currently on screen
+        $(".modal.in").modal("toggle");
       }
     });
   }
