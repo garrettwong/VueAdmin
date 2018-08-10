@@ -217,8 +217,6 @@ export default {
         let person = this.rows[i];
 
         if (person.id === editedPerson.id) {
-          alert("derp");
-
           // find a better way to assign this
           this.rows[i].name = editedPerson.name;
           this.rows[i].age = editedPerson.age;

@@ -9,6 +9,7 @@ import ChatBox from './components/chat-box.vue';
 import CryptoPie from './components/crypto-pie.vue';
 import TodoList from './components/todo-list.vue';
 import TableEditor from './components/table-editor.vue';
+import WorldMap from './components/world-map.vue';
 
 Vue.use(VueRouter);
 
@@ -106,7 +107,8 @@ const Dashboard1 = {
 const Dashboard2 = {
   components: {
     'todo-list': TodoList,
-    'table-editor': TableEditor
+    'table-editor': TableEditor,
+    'world-map': WorldMap
   },
   props: [],
   data() {
@@ -139,6 +141,11 @@ const Dashboard2 = {
 
       <div class="col-sm-6">
         <table-editor></table-editor>
+      </div>
+
+
+      <div class="col-sm-6">
+        <world-map></world-map>
       </div>
     </div>`,
   methods: {
