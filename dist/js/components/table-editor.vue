@@ -62,7 +62,7 @@
 
                     <!-- chart -->
                     <transition name="fade" mode="out-in">
-                        <div v-show="showDashboard" class="item" style="martin-top:10px;">
+                        <div v-if="showDashboard" class="item" style="martin-top:10px;">
                             <coolness-chart v-bind:person="viewData"></coolness-chart>
                         </div>
                     </transition>

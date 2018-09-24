@@ -199,7 +199,7 @@ export default {
         },
         datasets: [
           {
-            label: "My First dataset",
+            label: "BTC",
             backgroundColor: color(window.chartColors.red)
               .alpha(0.5)
               .rgbString(),
@@ -244,7 +244,7 @@ export default {
             ]
           },
           {
-            label: "My Second dataset",
+            label: "ETH",
             backgroundColor: color(window.chartColors.orange)
               .alpha(0.5)
               .rgbString(),
@@ -300,7 +300,7 @@ export default {
           responsive: true,
           title: {
             display: true,
-            text: "Chart.js Bubble Chart"
+            text: "Cryptocurrencies"
           },
           tooltips: {
             mode: "point"

@@ -4,12 +4,12 @@
         <div class="box-header with-border">
             <i class="fa fa-warning"></i>
 
-            <h3 class="box-title">Coolness Chart</h3>
+            <h3 class="box-title">Status Chart</h3>
         </div>
         
         <div class="box-body">
-          {{person}}
-            <canvas id="coolnessChart" width="400" height="400"></canvas>
+          {{person.name}}
+            <canvas id="statusChart" width="400" height="400"></canvas>
         </div>
     </div>
 </template>
@@ -30,11 +30,13 @@ export default {
   methods: {},
 
   mounted: function() {
-    console.log("BOUND", this.person);
+    console.log("Coolness-Chart.vue this.person:", this.person);
 
     let _self = this;
 
     setTimeout(function() {
+      console.log('setTimeout');
+      
       window.chartColors = {
         red: "rgb(255, 99, 132)",
         orange: "rgb(255, 159, 64)",
@@ -301,16 +303,16 @@ export default {
         ]
       };
 
-      var ctx = document.getElementById("coolnessChart").getContext("2d");
+      var ctx = document.getElementById("statusChart").getContext("2d");
 
-      window.coolnessChart = new Chart(ctx, {
+      window.statusChart = new Chart(ctx, {
         type: "line",
         data: chartData,
         options: {
           responsive: true,
           title: {
             display: true,
-            text: "Coolness Rating over time"
+            text: "Status Rating over time"
           },
           tooltips: {
             mode: "point"
