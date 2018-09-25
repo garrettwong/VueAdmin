@@ -51,6 +51,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-12">
+                            
 
                             {{viewData.age}} - {{viewData.location}}
 
@@ -64,6 +65,10 @@
                     <transition name="fade" mode="out-in">
                         <div v-if="showDashboard" class="item" style="martin-top:10px;">
                             <coolness-chart v-bind:person="viewData"></coolness-chart>
+
+
+
+                            <combo-bar-line-chart v-bind:person="viewData"></combo-bar-line-chart>
                         </div>
                     </transition>
                 </div>
@@ -135,13 +140,16 @@ require("jquery-ui/ui/widgets/sortable");
 require("jquery-ui/ui/disable-selection");
 import "bootstrap/js/modal";
 
+import PersonService from "../services/person-service.js";
 import CoolnessChart from "./coolness-chart.vue";
+import ComboBarLineChart from "./combo-bar-line-chart.vue";
 
 // add modal
 
 export default {
   components: {
-    "coolness-chart": CoolnessChart
+    "coolness-chart": CoolnessChart,
+    "combo-bar-line-chart": ComboBarLineChart,
   },
   props: ["persons"],
   data() {
@@ -207,6 +215,7 @@ export default {
       // TODO: prevent event bubbling
         
       // two modals are opened on edit click
+
     },
     editPerson: function(editedPerson) {
       // TODO: we should edit this in the database first
@@ -232,12 +241,8 @@ export default {
   },
 
   mounted() {
-    this.cols = ["Id", "Name", "Age", "Location"];
-    this.rows = [
-      { id: 1, name: "Garrett", age: 29, location: "Sunnyvale" },
-      { id: 2, name: "Tyler", age: 26, location: "Walnut" },
-      { id: 3, name: "Jinfull", age: 29, location: "Miami" }
-    ];
+    this.cols = PersonService.getPersonPropertyNames();
+    this.rows = PersonService.getPersons();
 
     // Todo: initialize table plugin
 
